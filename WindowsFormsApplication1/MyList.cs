@@ -51,7 +51,7 @@ namespace WindowsFormsApplication1
         {
             string[] arr = strLine.Split(';');
 
-            if (int.Parse(arr[0]) == 2)
+            if (int.Parse(arr[0]) == 5)
             {
                 this.Shares[arr[1]].SellOperations.Add(new Operation(2, arr[2], int.Parse(arr[3])));
             }

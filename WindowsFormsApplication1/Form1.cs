@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1
             }
             foreach (Share s in lst.Shares.Values)
             {
-                while (s.Candles[0].CandleIndex == -1)
+                while (s.Candles[0].CandleIndex < 0)
                 {
                     s.Candles.RemoveAt(0);
                 }
@@ -202,14 +202,18 @@ namespace WindowsFormsApplication1
                     string strName = nStam++.ToString();
                     chart.Series.Add(strName);
                     chart.Series[strName].XValueType = ChartValueType.Int32;
-                    chart.Series[strName].ChartType = SeriesChartType.Spline;
+                    chart.Series[strName].ChartType = SeriesChartType.Line;
                     chart.Series[strName].BorderWidth = 3;
                     chart.Series[strName].IsValueShownAsLabel = false;
                     chart.Series[strName].BorderColor = Color.FromName("Black");
 
                     foreach (Operation o in currShare.SellOperations)
                     {
-                        chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
+                        //chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
+                        if (o.Price != 0)
+                        {
+                            chart.Series[strName].Points.AddXY(o.CandleIndex, o.Price);
+                        }
                     }
                 }
                 else

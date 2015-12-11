@@ -5,3 +5,11 @@ C:\Users\Or\Projects\Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsAp
 C:\Users\Or\Projects\Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.exe
 C:\Users\Or\Projects\Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.pdb
 C:\Users\Or\Projects\Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.exe
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.pdb
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\bin\x64\Debug\WindowsFormsApplication1.exe
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\bin\x64\Debug\WindowsFormsApplication1.pdb
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.H.resources
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Or\Projects\MBTrading - Graph\WindowsFormsApplication1\obj\x64\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
