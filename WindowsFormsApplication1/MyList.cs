@@ -53,7 +53,15 @@ namespace WindowsFormsApplication1
 
             if (int.Parse(arr[0]) == 5)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(2, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(5, arr[2], int.Parse(arr[3])));
+            }
+            else if (int.Parse(arr[0]) == 4)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(4, arr[2], int.Parse(arr[3])));
+            }
+            else if (int.Parse(arr[0]) == 3)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(3, arr[2], int.Parse(arr[3])));
             }
             else
             {

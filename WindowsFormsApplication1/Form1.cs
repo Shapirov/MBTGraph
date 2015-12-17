@@ -207,12 +207,37 @@ namespace WindowsFormsApplication1
                     chart.Series[strName].IsValueShownAsLabel = false;
                     chart.Series[strName].BorderColor = Color.FromName("Black");
 
+                    string strName2 = strName + strName;
+                    chart.Series.Add(strName2);
+                    chart.Series[strName2].XValueType = ChartValueType.Int32;
+                    chart.Series[strName2].ChartType = SeriesChartType.StackedColumn;
+                    chart.Series[strName2].BorderWidth = 1;
+                    chart.Series[strName2].IsValueShownAsLabel = false;
+                    chart.Series[strName2].BorderColor = Color.FromName("Black");
+                    string strName3 = strName2 + strName2;
+                    chart.Series.Add(strName3);
+                    chart.Series[strName3].XValueType = ChartValueType.Int32;
+                    chart.Series[strName3].ChartType = SeriesChartType.StackedColumn;
+                    chart.Series[strName3].BorderWidth = 1;
+                    chart.Series[strName3].IsValueShownAsLabel = false;
+                    chart.Series[strName3].BorderColor = Color.FromName("Black");
                     foreach (Operation o in currShare.SellOperations)
                     {
                         //chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
                         if (o.Price != 0)
                         {
-                            chart.Series[strName].Points.AddXY(o.CandleIndex, o.Price);
+                            if ((o.Sign == 5) && (o.CandleIndex - 498 > -1))
+                            {
+                                chart.Series[strName].Points.AddXY(o.CandleIndex + 2, o.Price);
+                            }
+                            else if (o.Sign == 4)
+                            {
+                                chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
+                            }
+                            else if (o.Sign == 3)
+                            {
+                           //     chart.Series[strName3].Points.AddXY(o.CandleIndex, o.Price);
+                            }
                         }
                     }
                 }
