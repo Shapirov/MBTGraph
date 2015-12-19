@@ -99,6 +99,13 @@ namespace WindowsFormsApplication1
                 chartDec.Series.Clear();
                 chartDec.ChartAreas.Add("1");
 
+
+                chart.Series.Add("6");
+                chart.Series["6"].XValueType = ChartValueType.Int32;
+                chart.Series["6"].ChartType = SeriesChartType.Area;
+                chart.Series["6"].BorderWidth = 1;
+                chart.Series["6"].BorderColor = Color.FromName("Green");
+
                 chart.Series.Add("1");
                 chart.Series["1"].XValueType = ChartValueType.Int32;
                 chart.Series["1"].ChartType = SeriesChartType.Candlestick;
@@ -109,12 +116,10 @@ namespace WindowsFormsApplication1
                 chart.Series["1"]["PriceDownColor"] = "Pink"; // down
                 chart.ChartAreas["1"].AxisY.Minimum = 300;
 
-
                 chart.Series.Add("2");
                 chart.Series["2"].XValueType = ChartValueType.Int32;
                 chart.Series["2"].ChartType = SeriesChartType.Spline;
                 chart.Series["2"].BorderWidth = 2;
-
 
                 chart.Series.Add("3");
                 chart.Series["3"].XValueType = ChartValueType.Int32;
@@ -122,29 +127,45 @@ namespace WindowsFormsApplication1
                 chart.Series["3"].BorderWidth = 4;
                 chart.Series["3"].BorderColor = Color.FromName("Green");
 
-                chartDec.Series.Add("4");
-                chartDec.Series["4"].XValueType = ChartValueType.Int32;
-                chartDec.Series["4"].ChartType = SeriesChartType.Spline;
-                chartDec.Series["4"].BorderWidth = 2;
-                chartDec.Series["4"].BorderColor = Color.FromName("Black");
+                chart.Series.Add("4");
+                chart.Series["4"].XValueType = ChartValueType.Int32;
+                chart.Series["4"].ChartType = SeriesChartType.Spline;
+                chart.Series["4"].BorderWidth = 4;
+                chart.Series["4"].BorderColor = Color.FromName("Green");
 
-                chartDec.Series.Add("5");
-                chartDec.Series["5"].XValueType = ChartValueType.Int32;
-                chartDec.Series["5"].ChartType = SeriesChartType.Spline;
-                chartDec.Series["5"].BorderWidth = 2;
-                chartDec.Series["5"].BorderColor = Color.FromName("Yellow");
+                chart.Series.Add("5");
+                chart.Series["5"].XValueType = ChartValueType.Int32;
+                chart.Series["5"].ChartType = SeriesChartType.Spline;
+                chart.Series["5"].BorderWidth = 4;
+                chart.Series["5"].BorderColor = Color.FromName("Green");
 
-                chartDec.Series.Add("6");
-                chartDec.Series["6"].XValueType = ChartValueType.Int32;
-                chartDec.Series["6"].ChartType = SeriesChartType.Spline;
-                chartDec.Series["6"].BorderWidth = 2;
-                chartDec.Series["6"].BorderColor = Color.FromName("Orange");
 
+
+                /////////////////////////////////////////////
+                /////////////////////////////////////////////
                 chartDec.Series.Add("7");
                 chartDec.Series["7"].XValueType = ChartValueType.Int32;
                 chartDec.Series["7"].ChartType = SeriesChartType.Spline;
-                chartDec.Series["7"].BorderWidth = 2;
-                chartDec.Series["7"].BorderColor = Color.FromName("Blue");
+                chartDec.Series["7"].BorderWidth = 3;
+                chartDec.Series["7"].BorderColor = Color.FromName("Black");
+
+                chartDec.Series.Add("8");
+                chartDec.Series["8"].XValueType = ChartValueType.Int32;
+                chartDec.Series["8"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["8"].BorderWidth = 3;
+                chartDec.Series["8"].BorderColor = Color.FromName("Yellow");
+
+                chartDec.Series.Add("9");
+                chartDec.Series["9"].XValueType = ChartValueType.Int32;
+                chartDec.Series["9"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["9"].BorderWidth = 2;
+                chartDec.Series["9"].BorderColor = Color.FromName("Orange");
+
+                chartDec.Series.Add("10");
+                chartDec.Series["10"].XValueType = ChartValueType.Int32;
+                chartDec.Series["10"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["10"].BorderWidth = 2;
+                chartDec.Series["10"].BorderColor = Color.FromName("Blue");
 
                 foreach (Candle currCandle in currShare.Candles)
                 {
@@ -162,12 +183,16 @@ namespace WindowsFormsApplication1
 
                     chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
                     chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
-                    chartDec.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorA);
-                    chartDec.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
-                    chartDec.Series["6"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
-                    chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
-                    //chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
-                    //chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                    chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
+                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
+
+
+                    //chartDec.Series["6"].Points.AddXY(currCandle.CandleIndex, (currCandle.High - currCandle.Bol_high) / (currShare.Max - currShare.Min) * 100);
+                    //chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, (currCandle.Bol_low - currCandle.WMA) / (currShare.Max - currShare.Min) * 100);
+                    chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorA);
+                    chartDec.Series["8"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
+                    chartDec.Series["9"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                    chartDec.Series["10"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
                 }
 
                 if (bWithLiniarLine)
@@ -196,23 +221,63 @@ namespace WindowsFormsApplication1
                             currShare.LastPrice = o.Price;
                         }
 
-                        chart.Series[strSeriesIndex].Points.AddXY(o.CandleIndex, o.Price);
+                        if ((o.Sign == 0) || (o.Sign == 1))
+                            chart.Series[strSeriesIndex].Points.AddXY(o.CandleIndex, o.Price);
                     }
 
                     string strName = nStam++.ToString();
                     chart.Series.Add(strName);
                     chart.Series[strName].XValueType = ChartValueType.Int32;
                     chart.Series[strName].ChartType = SeriesChartType.Line;
-                    chart.Series[strName].BorderWidth = 3;
+                    chart.Series[strName].BorderWidth = 1;
                     chart.Series[strName].IsValueShownAsLabel = false;
                     chart.Series[strName].BorderColor = Color.FromName("Black");
-
+                    string strName1 = strName + strName;
+                    chart.Series.Add(strName1);
+                    chart.Series[strName1].XValueType = ChartValueType.Int32;
+                    chart.Series[strName1].ChartType = SeriesChartType.Line;
+                    chart.Series[strName1].BorderWidth = 3;
+                    chart.Series[strName1].IsValueShownAsLabel = false;
+                    chart.Series[strName1].BorderColor = Color.FromName("Black");
+                    string strName2 = strName1 + strName1;
+                    chart.Series.Add(strName2);
+                    chart.Series[strName2].XValueType = ChartValueType.Int32;
+                    chart.Series[strName2].ChartType = SeriesChartType.StackedColumn;
+                    chart.Series[strName2].BorderWidth = 1;
+                    chart.Series[strName2].IsValueShownAsLabel = false;
+                    chart.Series[strName2].BorderColor = Color.FromName("Black");
+                    string strName3 = strName2 + strName2;
+                    chart.Series.Add(strName3);
+                    chart.Series[strName3].XValueType = ChartValueType.Int32;
+                    chart.Series[strName3].ChartType = SeriesChartType.StackedColumn;
+                    chart.Series[strName3].BorderWidth = 1;
+                    chart.Series[strName3].IsValueShownAsLabel = false;
+                    chart.Series[strName3].BorderColor = Color.FromName("Black");
                     foreach (Operation o in currShare.SellOperations)
                     {
                         //chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
                         if (o.Price != 0)
                         {
-                            chart.Series[strName].Points.AddXY(o.CandleIndex, o.Price);
+                            if ((o.Sign == 5) && (o.CandleIndex > -1))
+                            {
+                                chart.Series[strName].Points.AddXY(o.CandleIndex + 1, o.Price);
+                            }
+                            else if ((o.Sign == 12) && (o.CandleIndex > -1))
+                            {
+                                chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
+                            }
+                            else if (o.Sign == 4)
+                            {
+                     //           chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
+                            }
+                            else if (o.Sign == 3)
+                            {
+                           //     chart.Series[strName3].Points.AddXY(o.CandleIndex, o.Price);
+                            }
+                            else if (o.Sign == 2)
+                            {
+                                chart.Series["6"].Points.AddXY(o.CandleIndex, o.Price * (currShare.Max - currShare.Min) + currShare.Min);
+                            }
                         }
                     }
                 }
@@ -220,11 +285,11 @@ namespace WindowsFormsApplication1
                 {
                     foreach (Operation o in currShare.BuyOperations)
                     {
-                        chart.Series["4"].Points.AddXY(o.CandleIndex, o.Price);
+                        chart.Series["5"].Points.AddXY(o.CandleIndex, o.Price);
                     }
                     foreach (Operation o in currShare.SellOperations)
                     {
-                        chart.Series["5"].Points.AddXY(o.CandleIndex, o.Price);
+                        chart.Series["6"].Points.AddXY(o.CandleIndex, o.Price);
                     }
                 }
             }

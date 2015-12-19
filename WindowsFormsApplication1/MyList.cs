@@ -51,9 +51,30 @@ namespace WindowsFormsApplication1
         {
             string[] arr = strLine.Split(';');
 
+            // ZigZag - 5
             if (int.Parse(arr[0]) == 5)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(2, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(5, arr[2], int.Parse(arr[3])));
+            }
+            // ZigZag - 12
+            else if (int.Parse(arr[0]) == 12)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(12, arr[2], int.Parse(arr[3])));
+            }
+            // Stoploss raize 
+            else if (int.Parse(arr[0]) == 4)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(4, arr[2], int.Parse(arr[3])));
+            }
+            // ??
+            else if (int.Parse(arr[0]) == 3)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(3, arr[2], int.Parse(arr[3])));
+            }
+            // NN
+            else if (int.Parse(arr[0]) == 2)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(2, (arr[2]), int.Parse(arr[3])));
             }
             else
             {
@@ -91,6 +112,9 @@ namespace WindowsFormsApplication1
         public double Low;
         public double WMA;
         public double EMA;
+        public double Bol_low;
+        public double Bol_high;
+        public double NN;
         public double MyIndicatorA;
         public double MyIndicatorB;
         public double MyIndicatorC;
@@ -106,10 +130,12 @@ namespace WindowsFormsApplication1
             this.Low = double.Parse(arr[4]);
             this.WMA = double.Parse(arr[5]);
             this.EMA = double.Parse(arr[6]);
-            this.MyIndicatorA = double.TryParse(arr[7], out temp) ? temp : 0;
-            this.MyIndicatorB = double.TryParse(arr[8], out temp) ? temp : 0;
-            this.MyIndicatorC = double.TryParse(arr[9], out temp) ? temp : 0;
-            this.MyIndicatorD = double.TryParse(arr[10], out temp) ? temp : 0;
+            this.Bol_low = double.Parse(arr[12]);
+            this.Bol_high = double.Parse(arr[13]);
+            this.MyIndicatorA = double.TryParse(arr[8], out temp) ? temp : 0;
+            this.MyIndicatorB = double.TryParse(arr[9], out temp) ? temp : 0;
+            this.MyIndicatorC = double.TryParse(arr[10], out temp) ? temp : 0;
+            this.MyIndicatorD = double.TryParse(arr[11], out temp) ? temp : 0;
             this.CandleIndex = int.Parse(arr[arr.Length - 1]);
         }
     }
