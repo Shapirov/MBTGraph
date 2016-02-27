@@ -61,6 +61,16 @@ namespace WindowsFormsApplication1
             {
                 this.Shares[arr[1]].SellOperations.Add(new Operation(12, arr[2], int.Parse(arr[3])));
             }
+            // NN Real - 8
+            else if (int.Parse(arr[0]) == 8)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(8, arr[2], int.Parse(arr[3])));
+            }
+            // NN predicted - 9
+            else if (int.Parse(arr[0]) == 9)
+            {
+                this.Shares[arr[1]].SellOperations.Add(new Operation(9, arr[2], int.Parse(arr[3])));
+            }
             // Stoploss raize 
             else if (int.Parse(arr[0]) == 4)
             {
@@ -114,7 +124,8 @@ namespace WindowsFormsApplication1
         public double EMA;
         public double Bol_low;
         public double Bol_high;
-        public double NN;
+        public double NN_Real;
+        public double NN_Predicted;
         public double MyIndicatorA;
         public double MyIndicatorB;
         public double MyIndicatorC;
