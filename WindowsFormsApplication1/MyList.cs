@@ -141,8 +141,8 @@ namespace WindowsFormsApplication1
             this.Low = double.Parse(arr[4]);
             this.WMA = double.Parse(arr[5]);
             this.EMA = double.Parse(arr[6]);
-            this.Bol_low = double.Parse(arr[12]);
-            this.Bol_high = double.Parse(arr[13]);
+            this.Bol_low = double.TryParse(arr[12], out temp) ? temp : this.EMA;
+            this.Bol_high = double.TryParse(arr[13], out temp) ? temp : this.EMA;
             this.MyIndicatorA = double.TryParse(arr[8], out temp) ? temp : 0;
             this.MyIndicatorB = double.TryParse(arr[9], out temp) ? temp : 0;
             this.MyIndicatorC = double.TryParse(arr[10], out temp) ? temp : 0;
