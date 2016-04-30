@@ -272,7 +272,7 @@ namespace WindowsFormsApplication1
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+                                chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
                             }
                             else if (o.Sign == 4)
                             {
