@@ -151,8 +151,8 @@ namespace WindowsFormsApplication1
 
                 chartDec.Series.Add("8");
                 chartDec.Series["8"].XValueType = ChartValueType.Int32;
-                chartDec.Series["8"].ChartType = SeriesChartType.Spline;
-                chartDec.Series["8"].BorderWidth = 3;
+                chartDec.Series["8"].ChartType = SeriesChartType.SplineArea;
+                chartDec.Series["8"].BorderWidth = 0;
                 chartDec.Series["8"].BorderColor = Color.FromName("Yellow");
 
                 chartDec.Series.Add("9");
@@ -266,11 +266,23 @@ namespace WindowsFormsApplication1
                             }
                             else if ((o.Sign == 8) && (o.CandleIndex > -1))
                             {
+                                int nDelta = o.CandleIndex - chartDec.Series["8"].Points.Count;
+                                int nOffset = chartDec.Series["8"].Points.Count;
+                                for (int i = 0; i < nDelta; i++)
+                                {
+                                    chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
+                                }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
                                 chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
                             }
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
+                                int nDelta = o.CandleIndex - chartDec.Series["9"].Points.Count;
+                                int nOffset = chartDec.Series["9"].Points.Count;
+                                for (int i = 0; i < nDelta; i++)
+                                {
+                                    chartDec.Series["9"].Points.AddXY(i + nOffset, 0);
+                                }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
                                 chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
                             }
