@@ -157,7 +157,7 @@ namespace WindowsFormsApplication1
 
                 chartDec.Series.Add("9");
                 chartDec.Series["9"].XValueType = ChartValueType.Int32;
-                chartDec.Series["9"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["9"].ChartType = SeriesChartType.SplineArea;
                 chartDec.Series["9"].BorderWidth = 1;
                 chartDec.Series["9"].BorderColor = Color.FromName("Orange");
 
@@ -208,7 +208,7 @@ namespace WindowsFormsApplication1
                             chart.Series[strSeriesIndex].ChartType = SeriesChartType.Point;
                             chart.Series[strSeriesIndex].ChartType = SeriesChartType.Spline;
                             chart.Series[strSeriesIndex].BorderWidth = 8;
-                            chart.Series[strSeriesIndex].IsValueShownAsLabel = true;
+                            chart.Series[strSeriesIndex].IsValueShownAsLabel = false;
                             chart.Series[strSeriesIndex].BorderColor = Color.FromName("Black");
 
                             nSeriesIndex++;
@@ -273,7 +273,7 @@ namespace WindowsFormsApplication1
                                     chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
                                 }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+ //                               chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
                             }
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
