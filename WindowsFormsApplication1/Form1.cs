@@ -85,10 +85,10 @@ namespace WindowsFormsApplication1
                 chartDec.Show();
                 chart.Width = currShare.Candles.Count * 10;
                 chartDec.Width = currShare.Candles.Count * 10; 
-                chart.Height = 600;
-                chartDec.Height = 300;
-                chart.Top = 900 * nCharts;
-                chartDec.Top = 600 + (900 * nCharts);
+                chart.Height = 1200;
+                chartDec.Height = 500;
+                chart.Top = 1700 * nCharts;
+                chartDec.Top = 1200 + (1700 * nCharts);
 
 
 
