@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace WindowsFormsApplication1
 {
@@ -159,8 +160,8 @@ namespace WindowsFormsApplication1
         public Operation(int nSign, string dPrice, int nCandleIndex)
         {
             double d;
-            bool b = double.TryParse(dPrice, out d);
-            if (b)
+
+            if (Double.TryParse(dPrice, out d))
             {
                 this.Price = d;
             }

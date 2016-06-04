@@ -154,12 +154,16 @@ namespace WindowsFormsApplication1
                 chartDec.Series["8"].ChartType = SeriesChartType.SplineArea;
                 chartDec.Series["8"].BorderWidth = 0;
                 chartDec.Series["8"].BorderColor = Color.FromName("Yellow");
+                chartDec.ChartAreas["1"].AxisY.Minimum = -0.005;
+                chartDec.ChartAreas["1"].AxisY.Maximum = 0.005;
 
                 chartDec.Series.Add("9");
                 chartDec.Series["9"].XValueType = ChartValueType.Int32;
                 chartDec.Series["9"].ChartType = SeriesChartType.SplineArea;
                 chartDec.Series["9"].BorderWidth = 1;
                 chartDec.Series["9"].BorderColor = Color.FromName("Orange");
+                chartDec.ChartAreas["1"].AxisY.Minimum = -0.005;
+                chartDec.ChartAreas["1"].AxisY.Maximum = 0.005;
 
                 //chartDec.Series.Add("10");
                 //chartDec.Series["10"].XValueType = ChartValueType.Int32;
@@ -258,7 +262,7 @@ namespace WindowsFormsApplication1
                         {
                             if ((o.Sign == 5) && (o.CandleIndex > -1))
                             {
-                                chart.Series[strName].Points.AddXY(o.CandleIndex + 1, o.Price);
+  //                              chart.Series[strName].Points.AddXY(o.CandleIndex + 1, o.Price);
                             }
                             else if ((o.Sign == 12) && (o.CandleIndex > -1))
                             {
@@ -273,7 +277,7 @@ namespace WindowsFormsApplication1
                                     chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
                                 }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
- //                               chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+                                chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
                             }
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
@@ -288,7 +292,7 @@ namespace WindowsFormsApplication1
                             }
                             else if (o.Sign == 4)
                             {
-                     //           chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
+                                //chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
                             }
                             else if (o.Sign == 3)
                             {
