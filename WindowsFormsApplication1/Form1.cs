@@ -266,7 +266,7 @@ namespace WindowsFormsApplication1
                             }
                             else if ((o.Sign == 12) && (o.CandleIndex > -1))
                             {
-                                chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
+ //                               chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
                             }
                             else if ((o.Sign == 8) && (o.CandleIndex > -1))
                             {
