@@ -124,30 +124,26 @@ namespace WindowsFormsApplication1
                 chart.Series.Add("3");
                 chart.Series["3"].XValueType = ChartValueType.Int32;
                 chart.Series["3"].ChartType = SeriesChartType.Spline;
-                chart.Series["3"].BorderWidth = 4;
+                chart.Series["3"].BorderWidth = 2;
                 chart.Series["3"].BorderColor = Color.FromName("Green");
 
                 chart.Series.Add("4");
                 chart.Series["4"].XValueType = ChartValueType.Int32;
                 chart.Series["4"].ChartType = SeriesChartType.Spline;
-                chart.Series["4"].BorderWidth = 4;
+                chart.Series["4"].BorderWidth = 2;
                 chart.Series["4"].BorderColor = Color.FromName("Green");
 
                 chart.Series.Add("5");
                 chart.Series["5"].XValueType = ChartValueType.Int32;
                 chart.Series["5"].ChartType = SeriesChartType.Spline;
-                chart.Series["5"].BorderWidth = 4;
+                chart.Series["5"].BorderWidth = 2;
                 chart.Series["5"].BorderColor = Color.FromName("Green");
 
 
 
                 /////////////////////////////////////////////
                 /////////////////////////////////////////////
-                //chartDec.Series.Add("7");
-                //chartDec.Series["7"].XValueType = ChartValueType.Int32;
-                //chartDec.Series["7"].ChartType = SeriesChartType.Area;
-                //chartDec.Series["7"].BorderWidth = 3;
-                //chartDec.Series["7"].BorderColor = Color.FromName("Black");
+
 
                 chartDec.Series.Add("8");
                 chartDec.Series["8"].XValueType = ChartValueType.Int32;
@@ -165,15 +161,36 @@ namespace WindowsFormsApplication1
                 chartDec.ChartAreas["1"].AxisY.Minimum = -0.005;
                 chartDec.ChartAreas["1"].AxisY.Maximum = 0.005;
 
-                //chartDec.Series.Add("10");
-                //chartDec.Series["10"].XValueType = ChartValueType.Int32;
-                //chartDec.Series["10"].ChartType = SeriesChartType.Spline;
-                //chartDec.Series["10"].BorderWidth = 2;
-                //chartDec.Series["10"].BorderColor = Color.FromName("Blue");
+
+
+                chartDec.Series.Add("101");
+                chartDec.Series["101"].XValueType = ChartValueType.Int32;
+                chartDec.Series["101"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["101"].BorderWidth = 3;
+                chartDec.Series["101"].BorderColor = Color.FromName("Yellow");
+
+                chartDec.Series.Add("102");
+                chartDec.Series["102"].XValueType = ChartValueType.Int32;
+                chartDec.Series["102"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["102"].BorderWidth = 3;
+                chartDec.Series["102"].BorderColor = Color.FromName("Orange");
+
+                chartDec.Series.Add("103");
+                chartDec.Series["103"].XValueType = ChartValueType.Int32;
+                chartDec.Series["103"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["103"].BorderWidth = 3;
+                chartDec.Series["103"].BorderColor = Color.FromName("Black");
+
+                chartDec.Series.Add("104");
+                chartDec.Series["104"].XValueType = ChartValueType.Int32;
+                chartDec.Series["104"].ChartType = SeriesChartType.Spline;
+                chartDec.Series["104"].BorderWidth = 2;
+                chartDec.Series["104"].BorderColor = Color.FromName("Blue");
+                
+
 
                 foreach (Candle currCandle in currShare.Candles)
                 {
-           
                     // adding date and high
                     chart.Series["1"].Points.AddXY(currCandle.CandleIndex, currCandle.High);
                     // adding low
@@ -185,124 +202,142 @@ namespace WindowsFormsApplication1
                     // adding close
                     chart.Series["1"].Points[currCandle.CandleIndex].YValues[3] = currCandle.Close;
 
-                    chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
-                    chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
-                    chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
-                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
+                    chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
+                    chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
+                    chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
+                    //                   chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
+ //                   chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
+ //                   chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
 
 
                     //chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, currCandle.NN == -100 ? 0 : currCandle.NN);
-                    //chartDec.Series["8"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
-                    //chartDec.Series["9"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
-                    //chartDec.Series["10"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
+                   chartDec.Series["104"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
+                   //chartDec.Series["102"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
+                   //chartDec.Series["103"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                   //chartDec.Series["104"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
+                   chartDec.ChartAreas["1"].AxisY.Minimum = 0;
+                   chartDec.ChartAreas["1"].AxisY.Maximum = 1;
                 }
 
                 if (bWithLiniarLine)
                 {
                     string strSeriesIndex = string.Empty;
-                    int nStam = 9999;
+                    int nPrev = 0;
+                    int nDir = 1;
+                    double buy = 0; 
                     foreach (Operation o in currShare.BuyOperations)
                     {
-                        if (o.Sign == 1)
-                        {
-                            currShare.LastPrice = o.Price;
-                            strSeriesIndex = nSeriesIndex.ToString();
-                            chart.Series.Add(strSeriesIndex);
-                            chart.Series[strSeriesIndex].XValueType = ChartValueType.Int32;
-                            chart.Series[strSeriesIndex].ChartType = SeriesChartType.Point;
-                            chart.Series[strSeriesIndex].ChartType = SeriesChartType.Spline;
-                            chart.Series[strSeriesIndex].BorderWidth = 8;
-                            chart.Series[strSeriesIndex].IsValueShownAsLabel = false;
-                            chart.Series[strSeriesIndex].BorderColor = Color.FromName("Black");
+                        
 
-                            nSeriesIndex++;
-                        }
-                        else if (o.Sign == 0)
-                        {
-                            currShare.PipsProfit += o.Price - currShare.LastPrice;
-                            currShare.LastPrice = o.Price;
-                        }
+                            if ((o.Sign == 1) && (nPrev != 1))
+                            {
+                                nDir = (chart.Series["3"].Points[o.CandleIndex].YValues[0] > chart.Series["3"].Points[o.CandleIndex - 1].YValues[0]) ? 1 : -1;
+                                buy = o.Price;
+                                currShare.LastPrice = o.Price;
+                                strSeriesIndex = nSeriesIndex.ToString();
+                                chart.Series.Add(strSeriesIndex);
+                                chart.Series[strSeriesIndex].XValueType = ChartValueType.Int32;
+                                chart.Series[strSeriesIndex].ChartType = SeriesChartType.Point;
+                                chart.Series[strSeriesIndex].ChartType = SeriesChartType.Spline;
+                                chart.Series[strSeriesIndex].BorderWidth = 5;
+                                chart.Series[strSeriesIndex].IsValueShownAsLabel = false;
+                                
+                                chart.Series[strSeriesIndex].BorderColor = Color.FromName("Black");
+                                nPrev = 1;
+                                nSeriesIndex++;
+                            }
+                            else if (o.Sign == 0)
+                            {
+                                chart.Series[strSeriesIndex].Color = (nDir * (o.Price - buy) > 0) ? Color.FromName("Green") : Color.FromName("Red");
+                                nPrev = 0;
+                                currShare.PipsProfit += o.Price - currShare.LastPrice;
+                                currShare.LastPrice = o.Price;
+                            }
 
-                        if ((o.Sign == 0) || (o.Sign == 1))
-                            chart.Series[strSeriesIndex].Points.AddXY(o.CandleIndex, o.Price);
+                            if ((o.Sign == 0) || (o.Sign == 1))
+                                chart.Series[strSeriesIndex].Points.AddXY(o.CandleIndex, o.Price);
+                        
                     }
 
-                    string strName = nStam++.ToString();
-                    chart.Series.Add(strName);
-                    chart.Series[strName].XValueType = ChartValueType.Int32;
-                    chart.Series[strName].ChartType = SeriesChartType.Line;
-                    chart.Series[strName].BorderWidth = 1;
-                    chart.Series[strName].IsValueShownAsLabel = false;
-                    chart.Series[strName].BorderColor = Color.FromName("Black");
-                    string strName1 = strName + strName;
-                    chart.Series.Add(strName1);
-                    chart.Series[strName1].XValueType = ChartValueType.Int32;
-                    chart.Series[strName1].ChartType = SeriesChartType.Line;
-                    chart.Series[strName1].BorderWidth = 3;
-                    chart.Series[strName1].IsValueShownAsLabel = false;
-                    chart.Series[strName1].BorderColor = Color.FromName("Black");
-                    string strName2 = strName1 + strName1;
-                    chart.Series.Add(strName2);
-                    chart.Series[strName2].XValueType = ChartValueType.Int32;
-                    chart.Series[strName2].ChartType = SeriesChartType.StackedColumn;
-                    chart.Series[strName2].BorderWidth = 1;
-                    chart.Series[strName2].IsValueShownAsLabel = false;
-                    chart.Series[strName2].BorderColor = Color.FromName("Black");
-                    string strName3 = strName2 + strName2;
-                    chart.Series.Add(strName3);
-                    chart.Series[strName3].XValueType = ChartValueType.Int32;
-                    chart.Series[strName3].ChartType = SeriesChartType.StackedColumn;
-                    chart.Series[strName3].BorderWidth = 1;
-                    chart.Series[strName3].IsValueShownAsLabel = false;
-                    chart.Series[strName3].BorderColor = Color.FromName("Black");
+                    ///////////string strName = nStam++.ToString();
+                    ///////////chart.Series.Add(strName);
+                    ///////////chart.Series[strName].XValueType = ChartValueType.Int32;
+                    ///////////chart.Series[strName].ChartType = SeriesChartType.Line;
+                    ///////////chart.Series[strName].BorderWidth = 1;
+                    ///////////chart.Series[strName].IsValueShownAsLabel = false;
+                    ///////////chart.Series[strName].BorderColor = Color.FromName("Black");
+                    ///////////string strName1 = strName + strName;
+                    ///////////chart.Series.Add(strName1);
+                    ///////////chart.Series[strName1].XValueType = ChartValueType.Int32;
+                    ///////////chart.Series[strName1].ChartType = SeriesChartType.Line;
+                    ///////////chart.Series[strName1].BorderWidth = 3;
+                    ///////////chart.Series[strName1].IsValueShownAsLabel = false;
+                    ///////////chart.Series[strName1].BorderColor = Color.FromName("Black");
+                    ///////////string strName2 = strName1 + strName1;
+                    ///////////chart.Series.Add(strName2);
+                    ///////////chart.Series[strName2].XValueType = ChartValueType.Int32;
+                    ///////////chart.Series[strName2].ChartType = SeriesChartType.StackedColumn;
+                    ///////////chart.Series[strName2].BorderWidth = 1;
+                    ///////////chart.Series[strName2].IsValueShownAsLabel = false;
+                    ///////////chart.Series[strName2].BorderColor = Color.FromName("Black");
+                    ///////////string strName3 = strName2 + strName2;
+                    ///////////chart.Series.Add(strName3);
+                    ///////////chart.Series[strName3].XValueType = ChartValueType.Int32;
+                    ///////////chart.Series[strName3].ChartType = SeriesChartType.StackedColumn;
+                    ///////////chart.Series[strName3].BorderWidth = 1;
+                    ///////////chart.Series[strName3].IsValueShownAsLabel = false;
+                    ///////////chart.Series[strName3].BorderColor = Color.FromName("Black");
                     foreach (Operation o in currShare.SellOperations)
                     {
-                        //chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
-                        if (o.Price != 0)
-                        {
-                            if ((o.Sign == 5) && (o.CandleIndex > -1))
+
+                            //chart.Series[strName].Points.AddXY(o.CandleIndex, currShare.Min + (o.Price * currShare.DeltaMxMn));
+                            if (o.Price != 0)
                             {
-  //                              chart.Series[strName].Points.AddXY(o.CandleIndex + 1, o.Price);
-                            }
-                            else if ((o.Sign == 12) && (o.CandleIndex > -1))
-                            {
-                                chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                            }
-                            else if ((o.Sign == 8) && (o.CandleIndex > -1))
-                            {
-                                int nDelta = o.CandleIndex - chartDec.Series["8"].Points.Count;
-                                int nOffset = chartDec.Series["8"].Points.Count;
-                                for (int i = 0; i < nDelta; i++)
+                                if ((o.Sign == 5) && (o.CandleIndex > -1))
                                 {
-                                    chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
+      //                              chart.Series[strName].Points.AddXY(o.CandleIndex + 1, o.Price);
                                 }
-                                //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
-                            }
-                            else if ((o.Sign == 9) && (o.CandleIndex > -1))
-                            {
-                                int nDelta = o.CandleIndex - chartDec.Series["9"].Points.Count;
-                                int nOffset = chartDec.Series["9"].Points.Count;
-                                for (int i = 0; i < nDelta; i++)
+                                else if ((o.Sign == 12) && (o.CandleIndex > -1))
                                 {
-                                    chartDec.Series["9"].Points.AddXY(i + nOffset, 0);
+     //                               chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
                                 }
-                                //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
+                               else if ((o.Sign == 8) && (o.CandleIndex > -1))
+                               {
+                                   int nDelta = o.CandleIndex - chartDec.Series["8"].Points.Count;
+                                   int nOffset = chartDec.Series["8"].Points.Count;
+                                   for (int i = 0; i < nDelta; i++)
+                                   {
+                                       chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
+                                   }
+                                   //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
+//////////////////                                   chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+                               }
+                               else if ((o.Sign == 9) && (o.CandleIndex > -1))
+                               {
+                                   int nDelta = o.CandleIndex - chartDec.Series["9"].Points.Count;
+                                   int nOffset = chartDec.Series["9"].Points.Count;
+                                   for (int i = 0; i < nDelta; i++)
+                                   {
+                                       chartDec.Series["9"].Points.AddXY(i + nOffset, 0);
+                                   }
+                                   //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
+//////////////////                                   chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
+                               }
+                                else if (o.Sign == 4)
+                                {
+                                    //chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
+                                }
+                                else if (o.Sign == 3)
+                                {
+                               //     chart.Series[strName3].Points.AddXY(o.CandleIndex, o.Price);
+                                }
+                                else if (o.Sign == 2)
+                                {
+                                    chart.Series["6"].Points.AddXY(o.CandleIndex, o.Price * (currShare.Max - currShare.Min) + currShare.Min);
+                                }
                             }
-                            else if (o.Sign == 4)
-                            {
-                                //chart.Series[strName2].Points.AddXY(o.CandleIndex, o.Price);
-                            }
-                            else if (o.Sign == 3)
-                            {
-                           //     chart.Series[strName3].Points.AddXY(o.CandleIndex, o.Price);
-                            }
-                            else if (o.Sign == 2)
-                            {
-                                chart.Series["6"].Points.AddXY(o.CandleIndex, o.Price * (currShare.Max - currShare.Min) + currShare.Min);
-                            }
-                        }
+                        
                     }
                 }
                 else

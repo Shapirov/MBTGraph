@@ -145,9 +145,9 @@ namespace WindowsFormsApplication1
             this.Bol_low = double.TryParse(arr[12], out temp) ? temp : this.EMA;
             this.Bol_high = double.TryParse(arr[13], out temp) ? temp : this.EMA;
             this.MyIndicatorA = double.TryParse(arr[8], out temp) ? temp : 0;
-            this.MyIndicatorB = double.TryParse(arr[9], out temp) ? temp : 0;
-            this.MyIndicatorC = double.TryParse(arr[10], out temp) ? temp : 0;
-            this.MyIndicatorD = double.TryParse(arr[11], out temp) ? temp : 0;
+            this.MyIndicatorB = double.TryParse(arr[16], out temp) ? temp : 0;
+            this.MyIndicatorC = double.TryParse(arr[15], out temp) ? temp : 0;
+            this.MyIndicatorD = double.TryParse(arr[14], out temp) ? temp : 0;
             this.CandleIndex = int.Parse(arr[arr.Length - 1]);
         }
     }
@@ -169,7 +169,7 @@ namespace WindowsFormsApplication1
             {
                 this.Lable = dPrice;
             }
-            this.CandleIndex = nCandleIndex - 1;
+            this.CandleIndex = nCandleIndex;// -1;
             this.Sign = nSign;
         }
     }
