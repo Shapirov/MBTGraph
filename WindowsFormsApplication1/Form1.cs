@@ -186,9 +186,11 @@ namespace WindowsFormsApplication1
                     chart.Series["1"].Points[currCandle.CandleIndex].YValues[3] = currCandle.Close;
 
                     chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
-                    chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
-                    chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
-                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
+                    //chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
+                    //chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
+                    //chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
+                    //chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
 
 
                     //chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, currCandle.NN == -100 ? 0 : currCandle.NN);
@@ -277,7 +279,7 @@ namespace WindowsFormsApplication1
                                     chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
                                 }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+           //                     chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
                             }
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
