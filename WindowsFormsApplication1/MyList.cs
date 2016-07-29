@@ -13,21 +13,21 @@ namespace WindowsFormsApplication1
         public MyList()
         {
             this.Shares = new Dictionary<string, Share>();
-            this.Shares.Add("AUD/JPY", new Share());
-            this.Shares.Add("AUD/USD", new Share());
-            this.Shares.Add("EUR/AUD", new Share());
-            this.Shares.Add("EUR/CHF", new Share());
-            this.Shares.Add("EUR/GBP", new Share());
-            this.Shares.Add("EUR/JPY", new Share());
-            this.Shares.Add("EUR/USD", new Share());
-            this.Shares.Add("GBP/USD", new Share());
-            this.Shares.Add("GBP/CHF", new Share());
-            this.Shares.Add("GBP/JPY", new Share());
-            this.Shares.Add("NZD/JPY", new Share());
-            this.Shares.Add("NZD/USD", new Share());
-            this.Shares.Add("USD/CAD", new Share());
-            this.Shares.Add("USD/CHF", new Share());
-            this.Shares.Add("USD/JPY", new Share());
+            this.Shares.Add("AUD/JPY", new Share(0.01));
+            this.Shares.Add("AUD/USD", new Share(0.0001));
+            this.Shares.Add("EUR/AUD", new Share(0.0001));
+            this.Shares.Add("EUR/CHF", new Share(0.0001));
+            this.Shares.Add("EUR/GBP", new Share(0.0001));
+            this.Shares.Add("EUR/JPY", new Share(0.01));
+            this.Shares.Add("EUR/USD", new Share(0.0001));
+            this.Shares.Add("GBP/USD", new Share(0.0001));
+            this.Shares.Add("GBP/CHF", new Share(0.0001));
+            this.Shares.Add("GBP/JPY", new Share(0.01));
+            this.Shares.Add("NZD/JPY", new Share(0.01));
+            this.Shares.Add("NZD/USD", new Share(0.0001));
+            this.Shares.Add("USD/CAD", new Share(0.0001));
+            this.Shares.Add("USD/CHF", new Share(0.0001));
+            this.Shares.Add("USD/JPY", new Share(0.01));
 
         }
         public void Load(string strLine)
@@ -41,11 +41,11 @@ namespace WindowsFormsApplication1
             string[] arr = strLine.Split(';');
             if (int.Parse(arr[0]) == 1)
             {
-                this.Shares[arr[1]].BuyOperations.Add(new Operation(1, (arr[2]), int.Parse(arr[3])));
+                this.Shares[arr[1]].BuyOperations.Add(new Operation(1, (arr[2]), 1, int.Parse(arr[3])));
             }
             else if (int.Parse(arr[0]) == 0)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(0, (arr[2]), int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(0, (arr[2]), int.Parse(arr[3]), int.Parse(arr[4])));
             }
         }
         public void LoadOperation_1(string strLine)
@@ -55,46 +55,47 @@ namespace WindowsFormsApplication1
             // ZigZag - 5
             if (int.Parse(arr[0]) == 5)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(5, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(5, arr[2], 1, int.Parse(arr[3])));
             }
             // ZigZag - 12
             else if (int.Parse(arr[0]) == 12)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(12, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(12, arr[2], 1, int.Parse(arr[3])));
             }
             // NN Real - 8
             else if (int.Parse(arr[0]) == 8)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(8, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(8, arr[2], 1, int.Parse(arr[3])));
             }
             // NN predicted - 9
             else if (int.Parse(arr[0]) == 9)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(9, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(9, arr[2], 1, int.Parse(arr[3])));
             }
             // Stoploss raize 
             else if (int.Parse(arr[0]) == 4)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(4, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(4, arr[2], 1, int.Parse(arr[3])));
             }
             // ??
             else if (int.Parse(arr[0]) == 3)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(3, arr[2], int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(3, arr[2], 1, int.Parse(arr[3])));
             }
             // NN
             else if (int.Parse(arr[0]) == 2)
             {
-                this.Shares[arr[1]].SellOperations.Add(new Operation(2, (arr[2]), int.Parse(arr[3])));
+                this.Shares[arr[1]].SellOperations.Add(new Operation(2, (arr[2]), 1, int.Parse(arr[3])));
             }
             else
             {
-                this.Shares[arr[1]].BuyOperations.Add(new Operation(int.Parse(arr[0]), (arr[2]), int.Parse(arr[3])));
+                this.Shares[arr[1]].BuyOperations.Add(new Operation(int.Parse(arr[0]), (arr[2]), arr.Length > 4 ? int.Parse(arr[3]) : 1, arr.Length > 4 ? int.Parse(arr[4]) : int.Parse(arr[3])));
             }
         }
     }
     public class Share
     {
+        public double PipUnit = 0.0001;
         public double Min = double.MaxValue;
         public double Max = double.MinValue;
         public double DeltaMxMn;
@@ -103,8 +104,9 @@ namespace WindowsFormsApplication1
         public List<Candle> Candles;
         public List<Operation> SellOperations;
         public List<Operation> BuyOperations;
-        public Share()
+        public Share(double d)
         {
+            PipUnit = d;
             this.Candles = new List<Candle>();
             this.SellOperations = new List<Operation>();
             this.BuyOperations = new List<Operation>();
@@ -145,7 +147,7 @@ namespace WindowsFormsApplication1
             this.Bol_low = double.TryParse(arr[12], out temp) ? temp : this.EMA;
             this.Bol_high = double.TryParse(arr[13], out temp) ? temp : this.EMA;
             this.MyIndicatorA = double.TryParse(arr[8], out temp) ? temp : 0;
-            this.MyIndicatorB = double.TryParse(arr[9], out temp) ? temp : 0;
+            this.MyIndicatorB = double.TryParse(arr[16], out temp) ? temp : 0;
             this.MyIndicatorC = double.TryParse(arr[15], out temp) ? temp : 0;
             this.MyIndicatorD = double.TryParse(arr[14], out temp) ? temp : 0;
             this.CandleIndex = int.Parse(arr[arr.Length - 1]);
@@ -156,10 +158,12 @@ namespace WindowsFormsApplication1
         public double Price;
         public int CandleIndex;
         public int Sign;
+        public int Direction;
         public string Lable;
-        public Operation(int nSign, string dPrice, int nCandleIndex)
+        public Operation(int nSign, string dPrice, int nDirection, int nCandleIndex)
         {
             double d;
+            this.Direction = nDirection;
 
             if (Double.TryParse(dPrice, out d))
             {
@@ -169,7 +173,7 @@ namespace WindowsFormsApplication1
             {
                 this.Lable = dPrice;
             }
-            this.CandleIndex = nCandleIndex - 1;
+            this.CandleIndex = nCandleIndex;// -1;
             this.Sign = nSign;
         }
     }
