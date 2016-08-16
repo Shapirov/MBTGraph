@@ -14,6 +14,11 @@ namespace WindowsFormsApplication1
 {
     public partial class H : Form
     {
+        public static bool bWithSecondery = false;
+        public static int priorChartHighet = 800; // 1200;
+        public static int secondChartHighet = 200; // 500;
+        public static int width = 2; // 10;
+
         public H()
         {
             InitializeComponent();
@@ -81,15 +86,20 @@ namespace WindowsFormsApplication1
 
                 chart.Name = strCurrSymbol;
                 pPanel.Controls.Add(chart);
-                pPanel.Controls.Add(chartDec);
                 chart.Show();
-                chartDec.Show();
-                chart.Width = currShare.Candles.Count * 10;
-                chartDec.Width = currShare.Candles.Count * 10;
-                chart.Height = 1200;
-                chartDec.Height = 500;
-                chart.Top = 1700 * nCharts;
-                chartDec.Top = 1200 + (1700 * nCharts);
+
+                if (H.bWithSecondery)
+                {
+                    pPanel.Controls.Add(chartDec);
+                    chartDec.Show();
+                }
+
+                chart.Width = currShare.Candles.Count * H.width;
+                chartDec.Width = currShare.Candles.Count * H.width;
+                chart.Height = H.priorChartHighet;
+                chartDec.Height = (H.bWithSecondery ? H.secondChartHighet : 0);
+                chart.Top = ((H.bWithSecondery ? H.secondChartHighet : 0) + H.priorChartHighet) * nCharts;
+                chartDec.Top = H.priorChartHighet + (((H.bWithSecondery ? H.secondChartHighet : 0) + H.priorChartHighet) * nCharts);
 
 
 
@@ -203,10 +213,10 @@ namespace WindowsFormsApplication1
                     // adding close
                     chart.Series["1"].Points[currCandle.CandleIndex].YValues[3] = currCandle.Close;
 
-                    //chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
-                    chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
-                    chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
-                    chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
+                    chart.Series["2"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
+               //     chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.EMA);
+                    //chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
+                    //chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
                     //                   chart.Series["3"].Points.AddXY(currCandle.CandleIndex, currCandle.WMA);
                     //                   chart.Series["4"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_low);
                     //                   chart.Series["5"].Points.AddXY(currCandle.CandleIndex, currCandle.Bol_high);
@@ -216,12 +226,12 @@ namespace WindowsFormsApplication1
                     if (n > 0)
                         dx = currCandle.MyIndicatorB / (100 * currShare.PipUnit);//GetTR(currCandle, currShare.Candles[n - 1]) / currCandle.MyIndicatorB;
                     //chartDec.Series["7"].Points.AddXY(currCandle.CandleIndex, currCandle.NN == -100 ? 0 : currCandle.NN);
-                    chartDec.Series["104"].Points.AddXY(currCandle.CandleIndex, dx > 1 ? 1 : dx);
+                    //chartDec.Series["104"].Points.AddXY(currCandle.CandleIndex, dx > 1 ? 1 : dx);
                     //chartDec.Series["102"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorB);
                     //chartDec.Series["103"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorC);
                     //chartDec.Series["104"].Points.AddXY(currCandle.CandleIndex, currCandle.MyIndicatorD);
-                    chartDec.ChartAreas["1"].AxisY.Minimum = 0;
-                    chartDec.ChartAreas["1"].AxisY.Maximum = 1;
+                    //chartDec.ChartAreas["1"].AxisY.Minimum = 0;
+                    //chartDec.ChartAreas["1"].AxisY.Maximum = 1;
                     n++;
                 }
 
@@ -263,7 +273,7 @@ namespace WindowsFormsApplication1
                             chart.Series[strSeriesIndex].Points.AddXY(o.CandleIndex, o.Price);
 
                     }
-
+                    double dMaxPred = 0;
                     ///////////string strName = nStam++.ToString();
                     ///////////chart.Series.Add(strName);
                     ///////////chart.Series[strName].XValueType = ChartValueType.Int32;
@@ -315,7 +325,7 @@ namespace WindowsFormsApplication1
                                     chartDec.Series["8"].Points.AddXY(i + nOffset, 0);
                                 }
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                //////////////////                                   chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
+/////////                                chartDec.Series["8"].Points.AddXY(o.CandleIndex, o.Price == -100 ? 0 : o.Price);
                             }
                             else if ((o.Sign == 9) && (o.CandleIndex > -1))
                             {
@@ -325,8 +335,12 @@ namespace WindowsFormsApplication1
                                 {
                                     chartDec.Series["9"].Points.AddXY(i + nOffset, 0);
                                 }
+                                if (o.Price > dMaxPred)
+                                    dMaxPred = o.Price;
                                 //chart.Series[strName1].Points.AddXY(o.CandleIndex + 1, o.Price);
-                                //////////////////                                   chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
+                                chartDec.Series["9"].Points.AddXY(o.CandleIndex, o.Price == -1 ? 0 : o.Price);
+                                chartDec.ChartAreas["1"].AxisY.Minimum = -dMaxPred;
+                                chartDec.ChartAreas["1"].AxisY.Maximum = dMaxPred;
                             }
                             else if (o.Sign == 4)
                             {
